@@ -1,26 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { Flex } from "@chakra-ui/react";
+import Navigation from "./Navigation";
+import Context from "./helpers/context";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Flex flexDirection="column" minHeight="100vh" color="gray.700">
+      <Context>
+        <Navigation />
+      </Context>
+    </Flex>
   );
-}
+};
 
 export default App;
