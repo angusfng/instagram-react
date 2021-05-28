@@ -6,10 +6,11 @@ class API {
   }
 
   fetchJSON = async (endpoint: string, options = {}) => {
-    const res = await fetch(endpoint, options);
+    const res = await fetch(this.url + endpoint, options);
 
     if (!res.ok) {
-      throw Error("Something went wrong");
+      const error = await res.json();
+      throw error.message;
     }
 
     return await res.json();

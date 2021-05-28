@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Text } from "@chakra-ui/react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
-import { StoreContext } from "./helpers/context";
 import Register from "./pages/Register";
 
 const Navigation = () => {
