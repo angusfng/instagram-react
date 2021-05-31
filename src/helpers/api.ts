@@ -17,8 +17,12 @@ class API {
   };
 
   get = (endpoint: string) => {
+    console.log(`Token ${localStorage.getItem("token")}`);
     return this.fetchJSON(endpoint, {
       method: "GET",
+      headers: {
+        Authorization: `Token ${localStorage.getItem("token")}`,
+      },
     });
   };
 

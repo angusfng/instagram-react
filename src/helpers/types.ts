@@ -11,3 +11,22 @@ export type EditAlertType = (
   display: boolean,
   message: string
 ) => void;
+
+interface Comment {
+  author: string;
+  published: string;
+  comment: string;
+}
+
+export interface FeedPost {
+  id: number;
+  meta: {
+    author: string;
+    description_text: string;
+    published: string;
+    likes: number[];
+  };
+  thumbnail: string;
+  src: string;
+  comments: Comment[];
+}

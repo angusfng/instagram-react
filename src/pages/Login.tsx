@@ -11,43 +11,45 @@ import {
   Text,
   Link,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import API from "../helpers/api";
 import useAlert from "../helpers/useAlert";
 import MyAlert from "../components/MyAlert";
-import { StoreContext } from "../helpers/context";
 
 const Login = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [alertData, editAlert] = useAlert();
+  const history = useHistory();
 
   // Handle login
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const payload = {
-        username: username,
-        password: password,
-      };
-      const json = await API.post("/auth/login", payload);
-      console.log(json);
-    } catch (error) {
-      editAlert("error", true, error);
-    }
-
+    const doLogin = async () => {
+      try {
+        const payload = {
+          username: username,
+          password: password,
+        };
+        const json = await API.post("/auth/login", payload);
+        localStorage.setItem("token", json.token);
+        history.push("/");
+      } catch (error) {
+        editAlert("error", true, error);
+      }
+    };
+    doLogin();
     setUsername("");
     setPassword("");
   };
 
   return (
-    <Flex flex="1" bg="#fafafa" justify="center" align="center">
+    <Flex flex="1" bg="#fafafa" justify="center" align="center" p="1rem">
       <Box
         maxW="30rem"
         w="100%"
         border="1px"
         borderColor="gray.200"
-        m="1rem"
         borderRadius="5px"
         bg="white"
         p="1rem"

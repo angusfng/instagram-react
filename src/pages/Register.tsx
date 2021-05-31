@@ -11,9 +11,10 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import MyAlert from "../components/MyAlert";
 import useAlert from "../helpers/useAlert";
+import API from "../helpers/api";
 
 const Register = () => {
   const [name, setName] = React.useState("");
@@ -21,16 +22,33 @@ const Register = () => {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const history = useHistory();
   // Alert
   const [alertData, editAlert] = useAlert();
 
-  // Handle login
+  // Handle register
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       editAlert("error", true, "Passwords do not match");
       return;
     }
+    const doRegister = async () => {
+      try {
+        const payload = {
+          username: username,
+          password: password,
+          email: email,
+          name: name,
+        };
+        const json = await API.post("/auth/signup", payload);
+        localStorage.setItem("token", json.token);
+        history.push("/");
+      } catch (error) {
+        editAlert("error", true, error);
+      }
+    };
+    doRegister();
     setUsername("");
     setPassword("");
   };
